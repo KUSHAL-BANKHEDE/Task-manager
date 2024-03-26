@@ -17,7 +17,7 @@ function HomePage() {
     <div className="max-w-xl mx-auto">
       <div className="flex justify-center p-3 w-full mb-5 rounded-lg bg-white">
         <h1 className="text-4xl font-bold">
-          User Authentication
+          Task Manager
         </h1>
       </div>
       <div className="w-full p-4 rounded-lg bg-white">

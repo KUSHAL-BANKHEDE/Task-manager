@@ -6,6 +6,12 @@ const ListSchema = new mongoose.Schema({
         require: true , 
         minlength: 1,
         trim: true
+    },
+    description:{
+        type : String,
+        require: true , 
+        minlength: 1,
+        trim: true
     }
 })
 

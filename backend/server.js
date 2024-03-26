@@ -28,9 +28,11 @@ app.get('/lists' , (req , res) =>{
 })
 
 app.post('/lists',(req  , res)=>{
-  let title = req.body.title;
+  const title = req.body.title;
+  const description = req.body.description
   let newList = new List ({
-    title
+    title,
+    description
   })
   newList.save().then((listDoc) => {
     res.send(listDoc);
@@ -53,54 +55,54 @@ app.delete('/lists/:id' , (req ,res)=> {
   })
 
 
-  app.get('/lists/:listId/tasks' , (req , res)=>{
-    Task.find({
-      _listId:req.params.listId
-    }).then((Task)=> {
-      res.send(Task);
-    })
-  })
-
-// app.get('lists/:listId/tasks/:tasksId' , (req , res)=>{
-//   Task.findOne({
-//     _id:req.params.tasksId,
-//     _listId:req.params.listId
-//   }).then((Task)=> {
-//     res.send(Task);
+//   app.get('/lists/:listId/tasks' , (req , res)=>{
+//     Task.find({
+//       _listId:req.params.listId
+//     }).then((Task)=> {
+//       res.send(Task);
+//     })
 //   })
-// })
 
-  app.post('/lists/:listId/tasks' , (req , res) =>{
-    let newTask = newTask({
-      title: req.body.title,
-      _listId:req.params.listId
-    });
-    newTask.save().then((newTaskDoc)=>{
-      res.send(newTaskDoc);
-    })
-  })
+// // app.get('lists/:listId/tasks/:tasksId' , (req , res)=>{
+// //   Task.findOne({
+// //     _id:req.params.tasksId,
+// //     _listId:req.params.listId
+// //   }).then((Task)=> {
+// //     res.send(Task);
+// //   })
+// // })
 
-  app.patch('/lists/:listId/tasks/:tasksId' , (req , res)=>{
-    Task.findOneAndUpdate({
-      _id:req.params.tasksId,
-      _listId:req.params.listId
-    },{$set:req.body})
-    .then(()=>{
-      res.sendStatus(200)
+//   app.post('/lists/:listId/tasks' , (req , res) =>{
+//     let newTask = newTask({
+//       title: req.body.title,
+//       _listId:req.params.listId
+//     });
+//     newTask.save().then((newTaskDoc)=>{
+//       res.send(newTaskDoc);
+//     })
+//   })
+
+//   app.patch('/lists/:listId/tasks/:tasksId' , (req , res)=>{
+//     Task.findOneAndUpdate({
+//       _id:req.params.tasksId,
+//       _listId:req.params.listId
+//     },{$set:req.body})
+//     .then(()=>{
+//       res.sendStatus(200)
     
-    })
-  })
+//     })
+//   })
 
-  app.delete('/lists/:listId/tasks/:tasksId' , (req , res)=>{
-    Task.findOneAndDelete({
-      _id:req.params.tasksId,
-      _listId:req.params.listId
-    },)
-    .then((removeTaskDoc)=>{
-      res.sendStatus(removeTaskDoc);
+//   app.delete('/lists/:listId/tasks/:tasksId' , (req , res)=>{
+//     Task.findOneAndDelete({
+//       _id:req.params.tasksId,
+//       _listId:req.params.listId
+//     },)
+//     .then((removeTaskDoc)=>{
+//       res.sendStatus(removeTaskDoc);
     
-    })
-  })
+//     })
+//   })
 
 // const __dirname1 = path.resolve();
 

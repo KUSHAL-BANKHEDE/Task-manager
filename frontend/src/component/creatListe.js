@@ -1,9 +1,36 @@
 import { useState } from "react";
 
-export function CreateList(props) {
-  // react-query
+export const CreateList = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const submitHandler = async () => {
+    try {
+      const response = await fetch("/lists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create list");
+      }
+
+      const data = await response.json();
+      console.log("List created successfully:", data);
+      setTitle("");
+      setDescription("");
+      alert("List created successfully");
+    } catch (error) {
+      console.error("Error creating list:", error.message);
+      alert("Failed to create list. Please try again later.");
+    }
+  };
 
   return (
     <div>
@@ -15,10 +42,7 @@ export function CreateList(props) {
         }}
         type="text"
         placeholder="title"
-        onChange={function (e) {
-          const value = e.target.value;
-          setTitle(value);
-        }}
+        onChange={(e) => setTitle(e.target.value)}
       ></input>{" "}
       <br />
       <input
@@ -29,10 +53,7 @@ export function CreateList(props) {
         }}
         type="text"
         placeholder="description"
-        onChange={function (e) {
-          const value = e.target.value;
-          setDescription(value);
-        }}
+        onChange={(e) => setDescription(e.target.value)}
       ></input>{" "}
       <br />
       <button
@@ -40,25 +61,10 @@ export function CreateList(props) {
           padding: 10,
           margin: 10,
         }}
-        onClick={() => {
-          // axios
-          fetch("http://localhost:3001/todo", {
-            method: "POST",
-            body: JSON.stringify({
-              title: title,
-              description: description,
-            }),
-            headers: {
-              "Content-type": "application/json",
-            },
-          }).then(async function (res) {
-            const json = await res.json();
-            alert("Todo added");
-          });
-        }}
+        onClick={submitHandler}
       >
         Add a list
       </button>
     </div>
   );
-}
+};
